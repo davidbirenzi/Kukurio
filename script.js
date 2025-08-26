@@ -514,10 +514,33 @@ window.addEventListener('load', () => {
     console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
 });
 
+// Blog description toggle functionality
+function toggleDescription(button) {
+    const description = button.previousElementSibling;
+    const isExpanded = description.classList.contains('expanded');
+    
+    if (isExpanded) {
+        // Collapse the description
+        description.classList.remove('expanded');
+        description.classList.add('collapsed');
+        button.textContent = 'Read More';
+        button.classList.remove('btn-see-less');
+        button.classList.add('btn-read-more');
+    } else {
+        // Expand the description
+        description.classList.remove('collapsed');
+        description.classList.add('expanded');
+        button.textContent = 'See Less';
+        button.classList.remove('btn-read-more');
+        button.classList.add('btn-see-less');
+    }
+}
+
 // Export functions for potential external use
 window.NextVolve = {
     openEmailModal,
     closeEmailModal,
     typeWriter,
-    animateCounter
+    animateCounter,
+    toggleDescription
 };
