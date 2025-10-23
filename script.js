@@ -26,31 +26,36 @@ window.addEventListener('scroll', () => {
 });
 
 // Mobile menu toggle
-mobileMenuBtn.addEventListener('click', () => {
+mobileMenuBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     mobileMenu.classList.toggle('active');
     
-    // Toggle menu icon
-    const menuIcon = mobileMenuBtn.querySelector('[data-lucide="menu"]');
-    const closeIcon = mobileMenuBtn.querySelector('[data-lucide="x"]');
-    
+    // Immediate icon toggle
     if (mobileMenu.classList.contains('active')) {
-        menuIcon.style.display = 'none';
-        closeIcon.style.display = 'block';
+        mobileMenuBtn.innerHTML = '<i data-lucide="x"></i>';
     } else {
-        menuIcon.style.display = 'block';
-        closeIcon.style.display = 'none';
+        mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
     }
+    lucide.createIcons();
 });
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
         mobileMenu.classList.remove('active');
-        const menuIcon = mobileMenuBtn.querySelector('[data-lucide="menu"]');
-        const closeIcon = mobileMenuBtn.querySelector('[data-lucide="x"]');
-        menuIcon.style.display = 'block';
-        closeIcon.style.display = 'none';
+        mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+        lucide.createIcons();
     });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+        lucide.createIcons();
+    }
 });
 
 // Smooth scrolling for navigation links
